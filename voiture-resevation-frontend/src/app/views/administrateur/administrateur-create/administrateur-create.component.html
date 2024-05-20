@@ -1,0 +1,111 @@
+@defer (when standAlon) {
+  <c-row class="mb-3">
+    <c-nav class="hstack gap">
+      @if (toReturn) {
+        <c-nav-item class="p-2">
+          <button cButton color="secondary" [routerLink]="returnUrl" (click)="item = undefined">Return</button>
+        </c-nav-item>
+      }
+      <c-nav-item class="p-2 ms-auto">
+        <button cButton color="secondary" variant="outline" routerLink="/administrateur" (click)="item = undefined">
+          Cancel
+        </button>
+      </c-nav-item>
+      <c-nav-item class="p-2">
+        <button cButton color="dark" (click)="reset()">Reset</button>
+      </c-nav-item>
+      <c-nav-item class="p-2">
+        <button cButton color="primary" (click)="create()">
+          @if (sending) {
+            <c-spinner aria-hidden="true" size="sm"></c-spinner>
+          } @else {
+            <svg cIcon name="cilPlus"></svg>
+          }
+          Create
+        </button>
+      </c-nav-item>
+    </c-nav>
+  </c-row>
+  <ng-container *ngTemplateOutlet="createFrom"></ng-container>
+
+}
+
+@defer (when !standAlon) {
+  <ng-container *ngTemplateOutlet="createFrom"></ng-container>
+}
+
+<ng-template #createFrom>
+  <c-card class="mb-3">
+    <c-card-body>
+      <c-row class="g-3">
+        <c-col sm="4">
+          <label cLabel for="username">Username</label>
+          <input cFormControl id="username" type="text" placeholder="Username" [(ngModel)]="item.nom" name="username"
+                 [valid]="validator.username.valid" (blur)="validator.username.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.username.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="password">Password</label>
+          <input cFormControl id="password" type="text" placeholder="Password" [(ngModel)]="item.nom" name="password"
+                 [valid]="validator.password.valid" (blur)="validator.password.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.password.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="nom">Nom</label>
+          <input cFormControl id="nom" type="text" placeholder="Nom" [(ngModel)]="item.nom" name="nom"
+                 [valid]="validator.nom.valid" (blur)="validator.nom.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.nom.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="prenom">Prenom</label>
+          <input cFormControl id="prenom" type="text" placeholder="Prenom" [(ngModel)]="item.prenom" name="prenom"
+                 [valid]="validator.prenom.valid" (blur)="validator.prenom.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.prenom.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="age">Age</label>
+          <input cFormControl id="age" type="number" placeholder="Age" [(ngModel)]="item.age" name="age"
+                 [valid]="validator.age.valid" (blur)="validator.age.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.age.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="localite">Localite</label>
+          <input cFormControl id="localite" type="text" placeholder="Localite" [(ngModel)]="item.localite"
+                 name="localite" [valid]="validator.localite.valid" (blur)="validator.localite.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.localite.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="reservations">Reservations</label>
+          <c-input-group>
+            <select cSelect id="reservations" name="reservations" [(ngModel)]="reservations.id"
+                    [valid]="validator.reservations.valid" (blur)="validator.reservations.validate()">
+              @for (it of reservationList; track it) {
+                <option [value]="it.id">{{ it.id }}</option>
+              }
+            </select>
+            <button cButton color="secondary" type="button" variant="outline" (click)="navigateToReservationCreate()">
+              <svg cIcon name="cilPlus"></svg>
+            </button>
+            <c-form-feedback [valid]="false">{{ validator.reservations.message }}</c-form-feedback>
+          </c-input-group>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="offres">Offres</label>
+          <c-input-group>
+            <select cSelect id="offres" name="offres" [(ngModel)]="offres.id" [valid]="validator.offres.valid"
+                    (blur)="validator.offres.validate()">
+              @for (it of offreList; track it) {
+                <option [value]="it.id">{{ it.id }}</option>
+              }
+            </select>
+            <button cButton color="secondary" type="button" variant="outline" (click)="navigateToOffreCreate()">
+              <svg cIcon name="cilPlus"></svg>
+            </button>
+            <c-form-feedback [valid]="false">{{ validator.offres.message }}</c-form-feedback>
+          </c-input-group>
+        </c-col>
+      </c-row>
+    </c-card-body>
+  </c-card>
+</ng-template>
+

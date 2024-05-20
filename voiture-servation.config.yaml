@@ -1,0 +1,64 @@
+config:
+  backend: springboot
+  frontend: angular~coreui
+  security: true
+  dataLoader: true
+  structure: technical
+  complexity: simple
+
+properties:
+  loadData: false
+  frontend: http://localhost:4200
+
+project:
+  name: voiture-resevation
+  domain: com
+  groupID: example
+  usedJava: jakarta
+  port: 8037
+
+db:
+  type: mysql
+  name: voiture_resevation
+
+roles:
+  - ADMIN
+
+packages:
+  - entities:
+      - name: Administrateur#user
+        fields:
+          - nom
+          - prenom
+          - age|int
+          - localite
+          - reservations|Reservation{ManyToOne}
+          - offres|Offre{ManyToOne}
+        associations:
+          - with: Client
+            name: Contrat
+            fields:
+              - prix|double
+              - code|int
+      - name: Client
+        fields:
+          - nom
+          - prenom
+          - age|int
+          - localite
+          - adresse
+          - datePromis|date
+      - name: Reservation
+        fields:
+          - dateDebut|date
+          - dateFin|date
+      - name: Offre
+        fields:
+          - code
+      - name: Voiture
+        fields:
+          - marque
+          - coleur
+          - categorie
+          - nbrPlaces|int
+          - vitesse|int

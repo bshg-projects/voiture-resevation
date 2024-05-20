@@ -1,0 +1,74 @@
+@defer (when standAlon) {
+  <c-row class="mb-3">
+    <c-nav class="hstack gap">
+      @if (toReturn) {
+        <c-nav-item class="p-2">
+          <button cButton color="secondary" [routerLink]="returnUrl" (click)="item = undefined">Return</button>
+        </c-nav-item>
+      }
+      <c-nav-item class="p-2 ms-auto">
+        <button cButton color="secondary" variant="outline" routerLink="/voiture" (click)="item = undefined">Cancel
+        </button>
+      </c-nav-item>
+      <c-nav-item class="p-2">
+        <button cButton color="dark" (click)="reset()">Reset</button>
+      </c-nav-item>
+      <c-nav-item class="p-2">
+        <button cButton color="primary" (click)="create()">
+          @if (sending) {
+            <c-spinner aria-hidden="true" size="sm"></c-spinner>
+          } @else {
+            <svg cIcon name="cilPlus"></svg>
+          }
+          Create
+        </button>
+      </c-nav-item>
+    </c-nav>
+  </c-row>
+  <ng-container *ngTemplateOutlet="createFrom"></ng-container>
+
+}
+
+@defer (when !standAlon) {
+  <ng-container *ngTemplateOutlet="createFrom"></ng-container>
+}
+
+<ng-template #createFrom>
+  <c-card class="mb-3">
+    <c-card-body>
+      <c-row class="g-3">
+        <c-col sm="4">
+          <label cLabel for="marque">Marque</label>
+          <input cFormControl id="marque" type="text" placeholder="Marque" [(ngModel)]="item.marque" name="marque"
+                 [valid]="validator.marque.valid" (blur)="validator.marque.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.marque.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="coleur">Coleur</label>
+          <input cFormControl id="coleur" type="text" placeholder="Coleur" [(ngModel)]="item.coleur" name="coleur"
+                 [valid]="validator.coleur.valid" (blur)="validator.coleur.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.coleur.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="categorie">Categorie</label>
+          <input cFormControl id="categorie" type="text" placeholder="Categorie" [(ngModel)]="item.categorie"
+                 name="categorie" [valid]="validator.categorie.valid" (blur)="validator.categorie.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.categorie.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="nbrPlaces">NbrPlaces</label>
+          <input cFormControl id="nbrPlaces" type="number" placeholder="NbrPlaces" [(ngModel)]="item.nbrPlaces"
+                 name="nbrPlaces" [valid]="validator.nbrPlaces.valid" (blur)="validator.nbrPlaces.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.nbrPlaces.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="vitesse">Vitesse</label>
+          <input cFormControl id="vitesse" type="number" placeholder="Vitesse" [(ngModel)]="item.vitesse" name="vitesse"
+                 [valid]="validator.vitesse.valid" (blur)="validator.vitesse.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.vitesse.message }}</c-form-feedback>
+        </c-col>
+      </c-row>
+    </c-card-body>
+  </c-card>
+</ng-template>
+

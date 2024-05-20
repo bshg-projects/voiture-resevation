@@ -1,0 +1,82 @@
+@defer (when standAlon) {
+  <c-row class="mb-3">
+    <c-nav class="hstack gap">
+      <c-nav-item class="p-2 ms-auto">
+        <button cButton color="secondary" variant="outline" routerLink="/client" (click)="item = undefined">Cancel
+        </button>
+      </c-nav-item>
+      <c-nav-item class="p-2">
+        <button cButton color="dark" (click)="reset()">
+          @if (resetting) {
+            <c-spinner aria-hidden="true" size="sm"></c-spinner>
+          } @else {
+            <svg cIcon name="cilReload"></svg>
+          }
+          Reset
+        </button>
+      </c-nav-item>
+      <c-nav-item class="p-2">
+        <button cButton color="primary" (click)="update()">
+          @if (sending) {
+            <c-spinner aria-hidden="true" size="sm"></c-spinner>
+          } @else {
+            <svg cIcon name="cilPen"></svg>
+          }
+          Update
+        </button>
+      </c-nav-item>
+    </c-nav>
+  </c-row>
+  <ng-container *ngTemplateOutlet="createFrom"></ng-container>
+
+}
+
+@defer (when !standAlon) {
+  <ng-container *ngTemplateOutlet="createFrom"></ng-container>
+}
+
+<ng-template #createFrom>
+  <c-card class="mb-3">
+    <c-card-body>
+      <c-row class="g-3">
+        <c-col sm="4">
+          <label cLabel for="nom">Nom</label>
+          <input cFormControl id="nom" type="text" placeholder="Nom" [(ngModel)]="item.nom" name="nom"
+                 [valid]="validator.nom.valid" (blur)="validator.nom.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.nom.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="prenom">Prenom</label>
+          <input cFormControl id="prenom" type="text" placeholder="Prenom" [(ngModel)]="item.prenom" name="prenom"
+                 [valid]="validator.prenom.valid" (blur)="validator.prenom.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.prenom.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="age">Age</label>
+          <input cFormControl id="age" type="number" placeholder="Age" [(ngModel)]="item.age" name="age"
+                 [valid]="validator.age.valid" (blur)="validator.age.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.age.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="localite">Localite</label>
+          <input cFormControl id="localite" type="text" placeholder="Localite" [(ngModel)]="item.localite"
+                 name="localite" [valid]="validator.localite.valid" (blur)="validator.localite.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.localite.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="adresse">Adresse</label>
+          <input cFormControl id="adresse" type="text" placeholder="Adresse" [(ngModel)]="item.adresse" name="adresse"
+                 [valid]="validator.adresse.valid" (blur)="validator.adresse.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.adresse.message }}</c-form-feedback>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="datePromis">DatePromis</label>
+          <input cFormControl id="datePromis" type="date" placeholder="DatePromis" [(ngModel)]="item.datePromis"
+                 name="datePromis" [valid]="validator.datePromis.valid" (blur)="validator.datePromis.validate()"/>
+          <c-form-feedback [valid]="false">{{ validator.datePromis.message }}</c-form-feedback>
+        </c-col>
+      </c-row>
+    </c-card-body>
+  </c-card>
+</ng-template>
+
